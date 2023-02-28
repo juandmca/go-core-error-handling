@@ -6,13 +6,15 @@ import (
 )
 
 // Funcion que construye un nuevo RubikError en base a otro error
-func BuildRubikError(c *gin.Context, statusCode int, errorDescription string, detail *model.RubikErrorDetail) *model.RubikError {
+func BuildRubikError(c *gin.Context, statusCode int, friendlyMessage string, technicalMessage string, detail []model.RubikErrorDetail, errorCategory string) *model.RubikError {
 
-	return &model.RubikError{
-		Error:            nil,
+	rubikError := &model.RubikError{
 		StatusCode:       statusCode,
-		ErrorDescription: errorDescription,
-		ErrorCategory:    "",
-		ErrorDetail:      []model.RubikErrorDetail{*detail},
+		FriendlyMessage:  friendlyMessage,
+		TechnicalMessage: technicalMessage,
+		ErrorCategory:    errorCategory,
+		ErrorDetail:      detail,
+		Path:             c.FullPath(),
 	}
+	return rubikError
 }

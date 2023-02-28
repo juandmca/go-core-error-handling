@@ -1,15 +1,16 @@
 package model
 
 type RubikError struct {
-	Error            error              `json:"error"`
 	StatusCode       int                `json:"statusCode"`
-	ErrorDescription string             `json:"description"`
+	FriendlyMessage  string             `json:"friendlyMessage"`
+	TechnicalMessage string             `json:"technicalMessage"`
 	ErrorCategory    string             `json:"category"`
 	ErrorDetail      []RubikErrorDetail `json:"detail"`
+	Path             string             `json:"path"`
 }
 
 type RubikErrorDetail struct {
-	ErrorCode        string `json:"code"`
+	CustomCode       string `json:"customCode"`
 	ErrorDescription string `json:"description"`
 	ErrorComponent   string `json:"component"`
 }
