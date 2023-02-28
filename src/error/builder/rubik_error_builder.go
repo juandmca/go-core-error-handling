@@ -2,7 +2,7 @@ package builder
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/juandmca/go-core-error-handling/src/error/model"
+	"github.com/juandmca/go-core-error-handling/v2/src/error/model"
 )
 
 // Funcion que construye un nuevo RubikError en base a otro error

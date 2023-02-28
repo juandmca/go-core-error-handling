@@ -1,4 +1,4 @@
-module github.com/juandmca/go-core-error-handling
+module github.com/juandmca/go-core-error-handling/v2
 
 go 1.19
 
