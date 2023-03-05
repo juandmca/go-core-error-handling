@@ -18,6 +18,7 @@ func RubikLooger() func(c *gin.Context) {
 			request_body, _ := json.Marshal(&request_body)
 			over.MDC().Set("request-body", request_body)
 		}
+		over.MDC().Set("query-parameters", c.Request.URL.Query())
 		c.Next()
 	}
 }
