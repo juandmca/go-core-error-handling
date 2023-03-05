@@ -1,7 +1,7 @@
 package model
 
 type RubikError struct {
-	StatusCode       int                `json:"statusCode"`
+	StatusCode       int                `json:"-"`
 	FriendlyMessage  string             `json:"friendlyMessage"`
 	TechnicalMessage string             `json:"technicalMessage"`
 	ErrorCategory    string             `json:"category"`
