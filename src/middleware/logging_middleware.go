@@ -18,10 +18,13 @@ func RubikLooger() func(c *gin.Context) {
 
 		//Header check
 		if header_error := headerChecker(c); header_error != nil {
-			c.JSON(http.StatusBadRequest, &header_error)
-			c.Abort()
+			over.Log().Error("header-check-error", header_error)
+			//c.JSON(http.StatusBadRequest, &header_error)
+			c.AbortWithStatusJSON(http.StatusBadRequest, &header_error)
 			return
 		}
+		//Header Logger
+		over.MDC().Set("uuid", c.GetHeader("UUID"))
 
 		if request_body, error := c.GetRawData(); error != nil {
 			over.Log().Error("Error Obteniendo Body de la Peticion", error)
