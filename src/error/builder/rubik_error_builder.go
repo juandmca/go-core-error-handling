@@ -1,12 +1,13 @@
 package builder
 
 import (
-	"github.com/gin-gonic/gin"
+	"net/http"
+
 	"github.com/juandmca/go-core-error-handling/v2/src/error/model"
 )
 
 // Funcion que construye un nuevo RubikError en base a otro error
-func BuildRubikError(c *gin.Context, statusCode int, friendlyMessage string, technicalMessage string, detail []model.RubikErrorDetail, errorCategory string) *model.RubikError {
+func BuildRubikError(r *http.Request, statusCode int, friendlyMessage string, technicalMessage string, detail []model.RubikErrorDetail, errorCategory string) *model.RubikError {
 
 	return &model.RubikError{
 		StatusCode:       statusCode,
@@ -14,6 +15,6 @@ func BuildRubikError(c *gin.Context, statusCode int, friendlyMessage string, tec
 		TechnicalMessage: technicalMessage,
 		ErrorCategory:    errorCategory,
 		ErrorDetail:      detail,
-		Path:             c.FullPath(),
+		Path:             r.URL.Path,
 	}
 }
