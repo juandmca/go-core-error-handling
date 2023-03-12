@@ -1,5 +1,21 @@
 package middleware
 
+import (
+	"net/http"
+
+	over "github.com/Trendyol/overlog"
+	"github.com/mercadolibre/fury_go-core/pkg/web"
+)
+
+func RubikLogger() web.Middleware {
+	return func(h http.HandlerFunc) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+			over.NewDefault()
+			over.Log().Info("Operation Start: " + r.URL.Path)
+		}
+	}
+}
+
 // func RubikLooger() {
 
 // 	return func(c *gin.Context) {
