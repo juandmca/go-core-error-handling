@@ -1,6 +1,7 @@
 package logger
 
 import (
+	"encoding/json"
 	"net/http"
 	"os"
 
@@ -20,5 +21,6 @@ func LogError(r *http.Request, data interface{}) {
 	over.Log().Info("An error was found during the execution of the operation: " + r.URL.Path)
 	over.MDC().Set("x-request-id", r.Header.Get("x-request-id"))
 	over.AddGlobalFields("x-request-id")
-	over.Log().Error(&data)
+	output, _ := json.Marshal(&data)
+	over.Log().Error(output)
 }

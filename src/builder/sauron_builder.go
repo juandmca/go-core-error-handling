@@ -9,7 +9,8 @@ import (
 )
 
 // Funcion que construye un nuevo RubikError en base a otro error
-func BuildRubikError(r *http.Request, statusCode int, friendlyMessage string, technicalMessage string, detail []model.SauronErrorDetail, errorCategory string) *model.SauronError {
+func BuildRubikError(r *http.Request, statusCode int, friendlyMessage string, technicalMessage string,
+	detail []model.SauronErrorDetail, errorCategory string) *model.SauronError {
 
 	rubikError := &model.SauronError{
 		StatusCode:       statusCode,

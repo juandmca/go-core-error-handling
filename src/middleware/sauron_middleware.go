@@ -3,21 +3,11 @@ package middleware
 import (
 	"net/http"
 
-	over "github.com/Trendyol/overlog"
 	"github.com/juandmca/go-core-error-handling/v2/src/builder"
 	"github.com/juandmca/go-core-error-handling/v2/src/error/constants"
 	"github.com/juandmca/go-core-error-handling/v2/src/error/model"
 	"github.com/mercadolibre/fury_go-core/pkg/web"
 )
-
-func RubikLogger() web.Middleware {
-	return func(h http.HandlerFunc) http.HandlerFunc {
-		return func(w http.ResponseWriter, r *http.Request) {
-			over.NewDefault()
-			over.Log().Info("Operation Start: " + r.URL.Path)
-		}
-	}
-}
 
 // Funcion que valida la estructura de las cabeceras asegurandose que vengan los valores
 // requeridos para una correcta trazabilidad de la peticion
