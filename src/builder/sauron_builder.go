@@ -5,12 +5,13 @@ import (
 	"net/http"
 
 	"github.com/juandmca/go-core-error-handling/v2/src/error/model"
+	"github.com/juandmca/go-core-error-handling/v2/src/logger"
 )
 
 // Funcion que construye un nuevo RubikError en base a otro error
-func BuildRubikError(r *http.Request, statusCode int, friendlyMessage string, technicalMessage string, detail []model.RubikErrorDetail, errorCategory string) *model.RubikError {
+func BuildRubikError(r *http.Request, statusCode int, friendlyMessage string, technicalMessage string, detail []model.SauronErrorDetail, errorCategory string) *model.SauronError {
 
-	return &model.RubikError{
+	rubikError := &model.SauronError{
 		StatusCode:       statusCode,
 		FriendlyMessage:  friendlyMessage,
 		TechnicalMessage: technicalMessage,
@@ -18,6 +19,8 @@ func BuildRubikError(r *http.Request, statusCode int, friendlyMessage string, te
 		ErrorDetail:      detail,
 		Path:             r.URL.Path,
 	}
+	logger.LogError(r, rubikError)
+	return rubikError
 }
 
 func BuildDefaultResponse(rw http.ResponseWriter, data interface{}, status int) {
