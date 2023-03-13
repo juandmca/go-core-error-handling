@@ -2,13 +2,20 @@ package middleware
 
 import (
 	"net/http"
+	"os"
 
 	over "github.com/Trendyol/overlog"
 	"github.com/juandmca/go-core-error-handling/v2/src/builder"
 	"github.com/juandmca/go-core-error-handling/v2/src/error/constants"
 	"github.com/juandmca/go-core-error-handling/v2/src/error/model"
 	"github.com/mercadolibre/fury_go-core/pkg/web"
+	"github.com/rs/zerolog"
 )
+
+func init() {
+	zlogger := zerolog.New(os.Stderr).With().Str("foo", "bar").Logger()
+	over.New(zlogger)
+}
 
 func RubikLogger() web.Middleware {
 	return func(h http.HandlerFunc) http.HandlerFunc {

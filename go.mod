@@ -4,7 +4,6 @@ go 1.19
 
 require (
 	github.com/Trendyol/overlog v0.1.2
-	github.com/magiconair/properties v1.8.7
 	github.com/mercadolibre/fury_go-core v1.7.0
 )
 
@@ -23,7 +22,7 @@ require (
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/newrelic/go-agent/v3 v3.20.3 // indirect
-	github.com/rs/zerolog v1.28.0 // indirect
+	github.com/rs/zerolog v1.29.0 // indirect
 	go.opentelemetry.io/contrib v1.14.0 // indirect
 	go.opentelemetry.io/otel v1.13.0 // indirect
 	go.opentelemetry.io/otel/metric v0.36.0 // indirect

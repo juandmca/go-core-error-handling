@@ -2,7 +2,6 @@ package builder
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/juandmca/go-core-error-handling/v2/src/error/model"
@@ -25,5 +24,5 @@ func BuildDefaultResponse(rw http.ResponseWriter, data interface{}, status int) 
 	rw.Header().Set("Content-Type", "application/json")
 	rw.WriteHeader(status)
 	output, _ := json.Marshal(&data)
-	fmt.Fprintln(rw, string(output))
+	rw.Write(output)
 }
