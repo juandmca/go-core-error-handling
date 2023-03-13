@@ -1,11 +1,12 @@
 package middleware
 
 import (
-	"fmt"
 	"net/http"
 
 	over "github.com/Trendyol/overlog"
-	"github.com/magiconair/properties"
+	"github.com/juandmca/go-core-error-handling/v2/src/builder"
+	"github.com/juandmca/go-core-error-handling/v2/src/error/constants"
+	"github.com/juandmca/go-core-error-handling/v2/src/error/model"
 	"github.com/mercadolibre/fury_go-core/pkg/web"
 )
 
@@ -20,12 +21,23 @@ func RubikLogger() web.Middleware {
 
 // Funcion que valida la estructura de las cabeceras asegurandose que vengan los valores
 // requeridos para una correcta trazabilidad de la peticion
-func HeaderChecker() web.Middleware {
+func HeaderValidator() web.Middleware {
 	return func(h http.HandlerFunc) http.HandlerFunc {
 		return func(w http.ResponseWriter, r *http.Request) {
-			p := properties.MustLoadFile("../properties/header_structure.properties", properties.UTF8).Map()
-			for indice, property := range p {
-				fmt.Println("Indice: ", indice, "Nombre: ", property)
+			headers := []string{"x-request-id"}
+			detail := []model.RubikErrorDetail{}
+			for _, header := range headers {
+				if exist := r.Header.Get(header); exist == "" {
+					detail = append(detail, model.RubikErrorDetail{
+						ErrorDescription: "header field missing:" + header,
+						ErrorComponent:   "Error checcking header structure",
+					})
+				}
+			}
+			if len(detail) > 0 {
+				rubik_error := builder.BuildRubikError(r, http.StatusBadRequest, "An unexpected error happened when checking your request",
+					"Missing or incorrect headers in the request", detail, constants.TECHNICAL_ERROR)
+				builder.BuildDefaultResponse(w, rubik_error, http.StatusBadRequest)
 			}
 		}
 	}
