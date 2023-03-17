@@ -20,7 +20,7 @@ func BuildRubikError(r *http.Request, statusCode int, friendlyMessage string, te
 		ErrorDetail:      detail,
 		Path:             r.URL.Path,
 	}
-	logger.LogError(r, rubikError)
+	logger.LogMessage(r, rubikError)
 	return rubikError
 }
 
