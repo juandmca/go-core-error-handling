@@ -22,5 +22,5 @@ func LogError(r *http.Request, data interface{}) {
 	over.MDC().Set("x-request-id", r.Header.Get("x-request-id"))
 	over.AddGlobalFields("x-request-id")
 	output, _ := json.Marshal(&data)
-	over.Log().Error(output)
+	over.Log().Error(string(output))
 }
