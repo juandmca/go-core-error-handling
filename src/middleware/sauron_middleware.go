@@ -28,8 +28,9 @@ func HeaderValidator() web.Middleware {
 				rubik_error := builder.BuildRubikError(r, http.StatusBadRequest, "An unexpected error happened when checking your request",
 					"Missing or incorrect headers in the request", detail, constants.TECHNICAL_ERROR)
 				builder.BuildDefaultResponse(w, rubik_error, http.StatusBadRequest)
+			} else {
+				h.ServeHTTP(w, r)
 			}
-			h.ServeHTTP(w, r)
 		}
 	}
 }
