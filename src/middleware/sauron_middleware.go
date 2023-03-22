@@ -29,6 +29,7 @@ func HeaderValidator() web.Middleware {
 					"Missing or incorrect headers in the request", detail, constants.TECHNICAL_ERROR)
 				builder.BuildDefaultResponse(w, rubik_error, http.StatusBadRequest)
 			}
+			h.ServeHTTP(w, r)
 		}
 	}
 }
