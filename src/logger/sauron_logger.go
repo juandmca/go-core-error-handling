@@ -4,8 +4,10 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
+	"reflect"
 
 	over "github.com/Trendyol/overlog"
+	"github.com/juandmca/go-core-error-handling/v2/src/error/model"
 	"github.com/rs/zerolog"
 )
 
@@ -22,5 +24,10 @@ func LogMessage(r *http.Request, data interface{}) {
 	over.MDC().Set("x-request-id", r.Header.Get("x-request-id"))
 	over.AddGlobalFields("x-request-id")
 	output, _ := json.Marshal(&data)
-	over.Log().Error(string(output))
+
+	if reflect.TypeOf(data) == reflect.TypeOf(model.SauronError{}) {
+		over.Log().Error(string(output))
+	} else {
+		over.Log().Info(string(output))
+	}
 }

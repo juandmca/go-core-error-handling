@@ -25,9 +25,13 @@ func HeaderValidator() web.Middleware {
 				}
 			}
 			if len(detail) > 0 {
-				rubik_error := builder.BuildRubikError(r, http.StatusBadRequest, "An unexpected error happened when checking your request",
-					"Missing or incorrect headers in the request", detail, constants.TECHNICAL_ERROR)
-				builder.BuildDefaultResponse(w, rubik_error, http.StatusBadRequest)
+				sauron_error := &model.SauronError{
+					StatusCode:       http.StatusBadRequest,
+					FriendlyMessage:  "An unexpected error happened when checking your request",
+					TechnicalMessage: "Missing or incorrect headers in the request",
+					ErrorCategory:    constants.BUSINESS_ERROR,
+				}
+				builder.BuildDefaultResponse(w, builder.BuildSauronError(r, sauron_error, detail), http.StatusBadRequest)
 			} else {
 				h.ServeHTTP(w, r)
 			}
