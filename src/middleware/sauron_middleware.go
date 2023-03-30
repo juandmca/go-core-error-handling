@@ -52,6 +52,7 @@ func RequestValidator() web.Middleware {
 					fmt.Println(bodyError)
 				}
 			}
+			h.ServeHTTP(w, r)
 		}
 	}
 }
