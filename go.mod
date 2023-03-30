@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/Trendyol/overlog v0.1.2
+	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/mercadolibre/fury_go-core v1.7.0
 	github.com/rs/zerolog v1.29.0
 )
@@ -39,4 +40,5 @@ require (
 	google.golang.org/genproto v0.0.0-20230216225411-c8e22ba71e44 // indirect
 	google.golang.org/grpc v1.53.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
+	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
 )

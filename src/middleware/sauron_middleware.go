@@ -1,8 +1,10 @@
 package middleware
 
 import (
+	"fmt"
 	"net/http"
 
+	"github.com/go-playground/validator"
 	"github.com/juandmca/go-core-error-handling/v2/src/builder"
 	"github.com/juandmca/go-core-error-handling/v2/src/error/constants"
 	"github.com/juandmca/go-core-error-handling/v2/src/error/model"
@@ -34,6 +36,21 @@ func HeaderValidator() web.Middleware {
 				builder.BuildDefaultResponse(w, builder.BuildSauronError(r, sauron_error, detail), http.StatusBadRequest)
 			} else {
 				h.ServeHTTP(w, r)
+			}
+		}
+	}
+}
+
+// Funcion que valida la estructura del request de una peticion y mapea
+// los errores de validacion en una estructura SauronError
+func RequestValidator() web.Middleware {
+	return func(h http.HandlerFunc) http.HandlerFunc {
+		return func(w http.ResponseWriter, r *http.Request) {
+			validate := validator.New()
+			if body := r.Body; body != nil {
+				if bodyError := validate.Struct(body); bodyError != nil {
+					fmt.Println(bodyError)
+				}
 			}
 		}
 	}
