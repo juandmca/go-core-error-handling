@@ -26,7 +26,10 @@ func LogMessage(r *http.Request, data interface{}) {
 	over.AddGlobalFields("x-request-id")
 	output, _ := json.Marshal(&data)
 
+	fmt.Println(reflect.ValueOf(&data).Elem().Type().String())
+	fmt.Println(reflect.ValueOf(&data).Elem().Kind().String())
 	fmt.Println(reflect.ValueOf(&data).Type().String())
+	fmt.Println(reflect.ValueOf(&data).Kind().String())
 	fmt.Println(reflect.TypeOf(model.SauronError{}).String())
 	if reflect.ValueOf(&data).Type() == reflect.TypeOf(model.SauronError{}) {
 		over.Log().Error(string(output))

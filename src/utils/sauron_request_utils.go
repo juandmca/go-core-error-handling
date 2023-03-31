@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"net/http"
+	"strings"
 
 	"github.com/go-playground/validator"
 	"github.com/juandmca/go-core-error-handling/v2/src/builder"
@@ -16,6 +17,7 @@ func RequestValidator(r *http.Request, data interface{}) *model.SauronError {
 	var sauronError *model.SauronError
 	detail := []model.SauronErrorDetail{}
 	if decodeError := json.NewDecoder(r.Body).Decode(&data); decodeError != nil {
+		strings.Split(decodeError.Error(), "\r\n")
 		detail = append(detail, model.SauronErrorDetail{
 			ErrorDescription: "error on reading the body structure",
 			ErrorComponent:   decodeError.Error(),
@@ -23,11 +25,13 @@ func RequestValidator(r *http.Request, data interface{}) *model.SauronError {
 	}
 	if data != nil {
 		validate := validator.New()
-		if requestError := validate.Struct(data); requestError != nil {
-			detail = append(detail, model.SauronErrorDetail{
-				ErrorDescription: "error on reading the body structure",
-				ErrorComponent:   requestError.Error(),
-			})
+		if requestErrors := validate.Struct(data); requestErrors != nil {
+			for _, requestError := range strings.Split(requestErrors.Error(), "\r\n") {
+				detail = append(detail, model.SauronErrorDetail{
+					ErrorDescription: "error on reading the body structure",
+					ErrorComponent:   requestError,
+				})
+			}
 		}
 	}
 	if len(detail) > 0 {
