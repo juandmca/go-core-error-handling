@@ -29,7 +29,7 @@ func HeaderValidator() web.Middleware {
 					StatusCode:       http.StatusBadRequest,
 					FriendlyMessage:  "An unexpected error happened when checking your request",
 					TechnicalMessage: "Missing or incorrect headers in the request",
-					ErrorCategory:    constants.BUSINESS_ERROR,
+					ErrorCategory:    constants.TECHNICAL_ERROR,
 				}
 				builder.BuildDefaultResponse(w, builder.BuildSauronError(r, sauron_error, detail), http.StatusBadRequest)
 			} else {
